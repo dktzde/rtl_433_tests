@@ -1,0 +1,56 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+# CodeRabbit settings for this fork of merbanan/rtl_433_tests: test recordings and their expected decoder output.
+# PRs to the upstream are opened at merbanan/rtl_433_tests and are not reviewed by CodeRabbit.
+# Free for public repositories. Docs: https://docs.coderabbit.ai/reference/configuration
+language: en-US
+
+reviews:
+  # quiet = only important findings, chill = balanced, assertive = many (nitpicky)
+  profile: chill
+  request_changes_workflow: false
+  high_level_summary: true
+  collapse_walkthrough: true
+  changed_files_summary: false
+  sequence_diagrams: false
+  estimate_code_review_effort: false
+  related_prs: false
+  suggested_labels: false
+  suggested_reviewers: false
+  poem: false
+  in_progress_fortune: false
+
+  auto_review:
+    enabled: true
+    drafts: false
+    # documentation-only PRs need no automatic review
+    ignore_title_keywords:
+      - "docs:"
+      - "docs("
+
+  # Recordings are binary and cannot be reviewed; Markdown and images are skipped as well
+  path_filters:
+    - "!**/*.cu8"
+    - "!**/*.cs8"
+    - "!**/*.cs16"
+    - "!**/*.cf32"
+    - "!**/*.sr"
+    - "!**/*.ook"
+    - "!**/*.md"
+    - "!**/*.png"
+
+  path_instructions:
+    - path: "tests/**/*.json"
+      instructions: >-
+        Expected rtl_433 output for the recording with the same base name in the same folder (JSON lines as printed by
+        rtl_433 -F json, without the time field). Check: a recording exists for every JSON file, keys and their order
+        match the decoder's data_make output, values are plausible for the device, and there are no leftover fields
+        from local runs.
+    - path: "bin/**"
+      instructions: "Test runner scripts: check error handling and that a failing comparison is reported with the file name."
+
+  pre_merge_checks:
+    docstrings:
+      mode: "off"
+
+chat:
+  auto_reply: true
